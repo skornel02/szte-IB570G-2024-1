@@ -294,6 +294,7 @@ partial class EditPetForm
         Controls.Add(tableLayoutPanel1);
         Controls.Add(tableLayoutPanel2);
         Controls.Add(TitleLabel);
+        MaximizeBox = false;
         Name = "EditPetForm";
         Text = "Új kisállat";
         Load += AddPetForm_Load;

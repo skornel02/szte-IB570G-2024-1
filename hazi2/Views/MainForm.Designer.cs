@@ -40,6 +40,7 @@
             // 
             // menuStrip1
             // 
+            menuStrip1.BackColor = Color.FromArgb(192, 64, 0);
             menuStrip1.ImageScalingSize = new Size(20, 20);
             menuStrip1.Items.AddRange(new ToolStripItem[] { listázásToolStripMenuItem, újFelvételeToolStripMenuItem, újKategóriaFelvételeToolStripMenuItem, exportálásToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
@@ -50,20 +51,23 @@
             // 
             // listázásToolStripMenuItem
             // 
+            listázásToolStripMenuItem.ForeColor = Color.White;
             listázásToolStripMenuItem.Name = "listázásToolStripMenuItem";
             listázásToolStripMenuItem.Size = new Size(74, 24);
             listázásToolStripMenuItem.Text = "Listázás";
-            listázásToolStripMenuItem.Click += listázásToolStripMenuItem_Click;
+            listázásToolStripMenuItem.Click += listazasToolStripMenuItem_Click;
             // 
             // újFelvételeToolStripMenuItem
             // 
+            újFelvételeToolStripMenuItem.ForeColor = Color.White;
             újFelvételeToolStripMenuItem.Name = "újFelvételeToolStripMenuItem";
             újFelvételeToolStripMenuItem.Size = new Size(148, 24);
             újFelvételeToolStripMenuItem.Text = "Új kisállat felvétele";
-            újFelvételeToolStripMenuItem.Click += újFelvételeToolStripMenuItem_Click;
+            újFelvételeToolStripMenuItem.Click += ujFelveteleToolStripMenuItem_Click;
             // 
             // újKategóriaFelvételeToolStripMenuItem
             // 
+            újKategóriaFelvételeToolStripMenuItem.ForeColor = Color.White;
             újKategóriaFelvételeToolStripMenuItem.Name = "újKategóriaFelvételeToolStripMenuItem";
             újKategóriaFelvételeToolStripMenuItem.Size = new Size(165, 24);
             újKategóriaFelvételeToolStripMenuItem.Text = "Új kategória felvétele";
@@ -71,10 +75,11 @@
             // 
             // exportálásToolStripMenuItem
             // 
+            exportálásToolStripMenuItem.ForeColor = Color.White;
             exportálásToolStripMenuItem.Name = "exportálásToolStripMenuItem";
             exportálásToolStripMenuItem.Size = new Size(92, 24);
             exportálásToolStripMenuItem.Text = "Exportálás";
-            exportálásToolStripMenuItem.Click += exportálásToolStripMenuItem_Click;
+            exportálásToolStripMenuItem.Click += exportalasToolStripMenuItem_Click;
             // 
             // saveFileDialog
             // 

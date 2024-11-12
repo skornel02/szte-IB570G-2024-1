@@ -7,6 +7,21 @@ public partial class PetListPage : UserControl
 {
     private readonly BindingSource _bindingSource;
 
+    private PetController? _controller;
+    public PetController Controller
+    {
+        set
+        {
+            if (_controller is not null)
+            {
+                _controller.OnPetsChange -= HandlePetUpdate;
+            }
+
+            _controller = value;
+            _controller.OnPetsChange += HandlePetUpdate;
+        }
+    }
+
     public PetListPage()
     {
         InitializeComponent();
@@ -15,7 +30,7 @@ public partial class PetListPage : UserControl
 
     private void PetListPage_Load(object sender, EventArgs e)
     {
-        PetController.Instance.OnPetsChange += HandlePetUpdate;
+
     }
 
     private void HandlePetUpdate(List<PetEntity> pets)
@@ -31,13 +46,21 @@ public partial class PetListPage : UserControl
 
     protected override void OnHandleDestroyed(EventArgs e)
     {
-        PetController.Instance.OnPetsChange -= HandlePetUpdate;
+        if (_controller is not null)
+        {
+            _controller.OnPetsChange -= HandlePetUpdate;
+        }
 
         base.OnHandleDestroyed(e);
     }
 
     private void petGridView_CellClick(object sender, DataGridViewCellEventArgs e)
     {
+        if (_controller is null)
+        {
+            return;
+        }
+
         if (e.RowIndex == -1)
         {
             return;
@@ -45,7 +68,7 @@ public partial class PetListPage : UserControl
 
         var row = (PetEntity) petGridView.Rows[e.RowIndex].DataBoundItem;
 
-        var form = new EditPetForm(PetController.Instance, row);
+        var form = new EditPetForm(_controller, row);
         var result = form.ShowDialog();
 
         if (result == DialogResult.OK)

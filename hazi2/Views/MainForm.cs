@@ -1,4 +1,5 @@
-using hazi2.Controllers;
+Ôªøusing hazi2.Controllers;
+using hazi2.Persistance;
 using hazi2.Views;
 using IdGen;
 
@@ -6,70 +7,99 @@ namespace hazi2;
 
 public partial class MainForm : Form
 {
+    private readonly PetController? _controller;
+
     public MainForm()
     {
         InitializeComponent();
+
+        _controller = new PetController(new PetMemoryStore());
     }
 
     private void Form1_Load(object sender, EventArgs e)
     {
-        PetController.Instance.AddPet(new()
+        _controller?.AddPet(new()
         {
             Id = new IdGenerator(0).CreateId(),
             Name = "Bodri",
             Category = "Kutya",
             Age = 5,
-            Gender = "HÌm",
+            Gender = "H√≠m",
             Weight = 10
         });
     }
 
-    private void list·z·sToolStripMenuItem_Click(object sender, EventArgs e)
+    private void listazasToolStripMenuItem_Click(object sender, EventArgs e)
     {
+        if (_controller is null)
+        {
+            MessageBox.Show("Nincs inicializ√°lva a vez√©rl≈ë!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        PetListPage.Controller = _controller;
         PetListPage.Visible = true;
     }
 
-    private void ˙jFelvÈteleToolStripMenuItem_Click(object sender, EventArgs e)
+    private void ujFelveteleToolStripMenuItem_Click(object sender, EventArgs e)
     {
+        if (_controller is null)
+        {
+            MessageBox.Show("Nincs inicializ√°lva a vez√©rl≈ë!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
 
-        var form = new EditPetForm(PetController.Instance);
+        var form = new EditPetForm(_controller);
 
         var result = form.ShowDialog();
 
         if (result == DialogResult.OK)
         {
-            MessageBox.Show("Sikeres kis·llat hozz·ad·s!");
+            MessageBox.Show("Sikeres kis√°llat hozz√°ad√°s!");
         }
     }
 
-    private void export·l·sToolStripMenuItem_Click(object sender, EventArgs e)
+    private void exportalasToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        var pets = PetController.Instance.Pets.Select(_ => _.ExportString);
+        if (_controller is null)
+        {
+            MessageBox.Show("Nincs inicializ√°lva a vez√©rl≈ë!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        var pets = _controller.Pets.Select(_ => _.ExportString);
 
         var result = saveFileDialog.ShowDialog();
         if (result == DialogResult.OK)
         {
             File.WriteAllLines(saveFileDialog.FileName, pets);
 
-            MessageBox.Show("Sikeres export·l·s!");
+            MessageBox.Show("Sikeres export√°l√°s!");
         }
     }
 
-    private void ˙jKategÛriaFelvÈteleToolStripMenuItem_Click(object sender, EventArgs e)
+    private void √∫jKateg√≥riaFelv√©teleToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        var categoryPopup = new PromptPopup("KategÛria hozz·ad·sa", "KategÛria neve:", (category) =>
+        if (_controller is null)
+        {
+            MessageBox.Show("Nincs inicializ√°lva a vez√©rl≈ë!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        var categoryPopup = new PromptPopup("Kateg√≥ria hozz√°ad√°sa", "Kateg√≥ria neve:", "Cica", (category) =>
         {
             if (string.IsNullOrWhiteSpace(category))
             {
-                return "Hi·nyzÛ adatok!";
+                return "Hi√°nyz√≥ adatok!";
             }
 
-            if (PetController.Instance.Categories.Contains(category, StringComparer.CurrentCultureIgnoreCase))
+            if (_controller.Categories.Contains(category, StringComparer.CurrentCultureIgnoreCase))
             {
-                return "M·r lÈtezik ilyen kategÛria!";
+                return "M√°r l√©tezik ilyen kateg√≥ria!";
             }
 
-            PetController.Instance.Categories.Add(category);
+            _controller.Categories.Add(category);
+            MessageBox.Show("Sikeres kateg√≥ria hozz√°ad√°s!");
 
             return null;
         });

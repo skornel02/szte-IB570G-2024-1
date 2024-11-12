@@ -1,32 +1,32 @@
 ﻿using hazi2.Models;
+using hazi2.Persistance;
 
 namespace hazi2.Controllers;
 
-public class PetController
+public class PetController : IPetStore
 {
-    private static readonly Lazy<PetController> _instance = new(() => new PetController());
-
-    public static PetController Instance => _instance.Value;
+    private readonly IPetStore _petStore;
 
     private event Action<List<PetEntity>>? OnPetsChangeEvent;
 
     public event Action<List<PetEntity>>? OnPetsChange
     {
-        add {
+        add
+        {
             OnPetsChangeEvent += value;
-            value?.Invoke(_pets);
+            value?.Invoke(_petStore.Pets);
         }
         remove => OnPetsChangeEvent -= value;
     }
 
-    private readonly List<PetEntity> _pets = [];
-
-    public List<PetEntity> Pets { get => _pets; }
-
     public List<string> Categories { get; init; } = ["Kutya"];
 
-    private PetController()
-    { }
+    public List<PetEntity> Pets => _petStore.Pets;
+
+    public PetController(IPetStore petStore)
+    {
+        _petStore = petStore;
+    }
 
     public bool AddPet(PetEntity pet)
     {
@@ -35,10 +35,10 @@ public class PetController
             return false;
         }
 
-        _pets.Add(pet);
-        OnPetsChangeEvent?.Invoke(_pets);
+        var result = _petStore.AddPet(pet);
+        OnPetsChangeEvent?.Invoke(_petStore.Pets);
 
-        return true;
+        return result;
     }
 
     public bool UpdatePet(PetEntity pet)
@@ -48,16 +48,10 @@ public class PetController
             return false;
         }
 
-        var index = _pets.FindIndex(p => p.Id == pet.Id);
-        if (index == -1)
-        {
-            return false;
-        }
+        var result = _petStore.UpdatePet(pet);
+        OnPetsChangeEvent?.Invoke(_petStore.Pets);
 
-        _pets[index] = pet;
-        OnPetsChangeEvent?.Invoke(_pets);
-
-        return true;
+        return result;
     }
 
     public bool RemovePet(PetEntity pet)
@@ -67,15 +61,9 @@ public class PetController
             return false;
         }
 
-        var index = _pets.FindIndex(p => p.Id == pet.Id);
-        if (index == -1)
-        {
-            return false;
-        }
+        var result = _petStore.RemovePet(pet);
+        OnPetsChangeEvent?.Invoke(_petStore.Pets);
 
-        _pets.RemoveAt(index);
-        OnPetsChangeEvent?.Invoke(_pets);
-
-        return true;
+        return result;
     }
 }

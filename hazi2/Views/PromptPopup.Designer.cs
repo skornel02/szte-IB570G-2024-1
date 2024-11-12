@@ -32,6 +32,7 @@ partial class PromptPopup
         textBox1 = new TextBox();
         CancelButton = new Button();
         OkButton = new Button();
+        DefaultButton = new Button();
         SuspendLayout();
         // 
         // label1
@@ -57,7 +58,7 @@ partial class PromptPopup
         // 
         // CancelButton
         // 
-        CancelButton.Location = new Point(106, 134);
+        CancelButton.Location = new Point(46, 134);
         CancelButton.Name = "CancelButton";
         CancelButton.Size = new Size(94, 29);
         CancelButton.TabIndex = 2;
@@ -67,7 +68,7 @@ partial class PromptPopup
         // 
         // OkButton
         // 
-        OkButton.Location = new Point(353, 134);
+        OkButton.Location = new Point(386, 134);
         OkButton.Name = "OkButton";
         OkButton.Size = new Size(94, 29);
         OkButton.TabIndex = 3;
@@ -75,11 +76,22 @@ partial class PromptPopup
         OkButton.UseVisualStyleBackColor = true;
         OkButton.Click += OkButton_Click;
         // 
+        // DefaultButton
+        // 
+        DefaultButton.Location = new Point(215, 134);
+        DefaultButton.Name = "DefaultButton";
+        DefaultButton.Size = new Size(94, 29);
+        DefaultButton.TabIndex = 4;
+        DefaultButton.Text = "Alapérték";
+        DefaultButton.UseVisualStyleBackColor = true;
+        DefaultButton.Click += DefaultButton_Click;
+        // 
         // PromptPopup
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(549, 190);
+        Controls.Add(DefaultButton);
         Controls.Add(OkButton);
         Controls.Add(CancelButton);
         Controls.Add(textBox1);
@@ -98,4 +110,5 @@ partial class PromptPopup
     private TextBox textBox1;
     private Button CancelButton;
     private Button OkButton;
+    private Button DefaultButton;
 }

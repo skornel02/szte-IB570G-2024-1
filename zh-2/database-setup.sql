@@ -1,0 +1,10 @@
+CREATE TABLE Pets (
+	Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	Name TEXT(255),
+	Gender TEXT(20),
+	OwnerName TEXT(255),
+	Age INTEGER,
+	Weight REAL,
+	Category TEXT(25)
+);
+CREATE UNIQUE INDEX Pets_Name_IDX ON Pets (Name);

@@ -41,6 +41,12 @@
                     <input asp-for="PhotoUrl" class="form-control" placeholder="Photo URL" />
                     <label asp-for="PhotoUrl">Photo URL</label>
                     <span asp-validation-for="PhotoUrl" class="text-danger"></span>
+                    <p>
+                        <span class="text-secondary">
+                            Egy webcímről nem tudjuk eldönteni, hogy ténylegesen kép-e vagy sem, ezért egy valós URL-t elfogadunk.
+                            <span class="fst-italic">(pl: <a href="https://http.cat/404">http.cat/404</a>)</span>
+                        </span>
+                    </p>
                 </div>
                 
                 <div class="form-floating mb-3">

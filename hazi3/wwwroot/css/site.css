@@ -35,3 +35,7 @@ body {
 .navbar .nav-link:focus {
   color: #d1ecf1 !important;
 }
+
+.footer {
+    background: linear-gradient(-45deg, #1e3c72, white);
+}

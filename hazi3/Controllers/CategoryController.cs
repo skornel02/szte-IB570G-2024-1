@@ -16,7 +16,9 @@ public class CategoryController : Controller
 
     public async Task<IActionResult> Index()
     {
-        return View(await _context.Categories.ToListAsync());
+        return View(await _context.Categories
+            .OrderBy(_ => _.Id)
+            .ToListAsync());
     }
 
     public async Task<IActionResult> Details(long? id)

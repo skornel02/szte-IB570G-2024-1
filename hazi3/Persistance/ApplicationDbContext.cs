@@ -22,8 +22,15 @@ public class ApplicationDbContext : DbContext
             .Property(_ => _.Id)
             .ValueGeneratedOnAdd();
 
+        modelBuilder.Entity<PetEntity>()
+            .HasOne(_ => _.Category)
+            .WithMany(_ => _.Pets)
+            .HasForeignKey(_ => _.CategoryId)
+            .OnDelete(DeleteBehavior.SetNull);
+
         modelBuilder.Entity<CategoryEntity>()
             .Property(_ => _.Id)
             .ValueGeneratedOnAdd();
+
     }
 }

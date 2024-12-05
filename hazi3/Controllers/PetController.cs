@@ -18,6 +18,7 @@ public class PetController : Controller
     {
         return View(await _context.Pets
             .Include(_ => _.Category)
+            .OrderBy(_ => _.Id)
             .ToListAsync());
     }
 

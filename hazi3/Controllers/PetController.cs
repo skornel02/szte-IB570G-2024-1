@@ -29,6 +29,7 @@ public class PetController : Controller
         }
 
         PetEntity? petEntity = await _context.Pets
+            .Include(_ => _.Category)
             .FirstOrDefaultAsync(m => m.Id == id);
         return petEntity == null ? NotFound() : View(petEntity);
     }

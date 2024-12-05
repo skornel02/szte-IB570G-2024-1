@@ -1,13 +1,13 @@
-﻿@model hazi3.Entities.CategoryEntity
+﻿@using hazi3.Entities
+@model hazi3.Entities.CategoryEntity
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Category details";
 }
 
-<h1>Details</h1>
+<h1>Category details</h1>
 
 <div>
-    <h4>CategoryEntity</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -24,6 +24,38 @@
         </dd>
     </dl>
 </div>
+
+<div>
+    <h4>Pets</h4>
+    @{
+		var pets = ViewBag.Pets as List<PetEntity> ?? [];
+    }
+
+    <ul class="list-group">
+
+
+        @if (pets.Count == 0)
+        {
+            <li class="list-group-item">
+                <p>No pets in this category</p>
+            </li>
+        }
+
+        @foreach (var pet in pets)
+        {
+            <li class="list-group-item">
+                <a class="list-group-item-action"
+                    asp-controller="Pet"
+                    asp-route-id="@pet.Id"
+                    asp-action="Details">
+                    @pet.Name
+                </a>
+            </li>
+        }
+    </ul>
+    
+</div>
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>

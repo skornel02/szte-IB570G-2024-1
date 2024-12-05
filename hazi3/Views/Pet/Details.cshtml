@@ -1,48 +1,54 @@
 ﻿@model hazi3.Entities.PetEntity
 
 @{
-    ViewData["Title"] = "Details";
+	ViewData["Title"] = "Pet details";
 }
 
-<h1>Details</h1>
+<h1>Pet details</h1>
+
+<div class="row">
+
+	<div class="col-12 d-flex justify-content-center">
+		<img class="pet-image-details" src="@Model.PhotoUrl" />
+	</div>
+</div>
 
 <div>
-    <h4>PetEntity</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Age)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Age)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Weight)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Weight)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PhotoUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PhotoUrl)
-        </dd>
-    </dl>
+	<dl class="row">
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Name)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Name)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Gender)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Gender)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Age)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Age)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Weight)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Weight)
+		</dd>
+	</dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+	<a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+	<a asp-action="Index">Back to List</a>
 </div>
+
+<style>
+	.pet-image-details {
+		max-width: 300px;
+		max-height: 300px;
+	}
+</style>

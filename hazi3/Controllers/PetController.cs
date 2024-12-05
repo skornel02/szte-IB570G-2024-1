@@ -3,7 +3,7 @@ using hazi3.Persistance;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace hazi3.Views;
+namespace hazi3.Controllers;
 
 public class PetController : Controller
 {
@@ -16,7 +16,9 @@ public class PetController : Controller
 
     public async Task<IActionResult> Index()
     {
-        return View(await _context.Pets.ToListAsync());
+        return View(await _context.Pets
+            .Include(_ => _.Category)
+            .ToListAsync());
     }
 
     public async Task<IActionResult> Details(long? id)
@@ -31,14 +33,17 @@ public class PetController : Controller
         return petEntity == null ? NotFound() : View(petEntity);
     }
 
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
+        var categories = await _context.Categories.ToListAsync();
+        ViewBag.Categories = categories;
+
         return View();
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Name,Gender,Age,Weight,PhotoUrl")] PetEntity petEntity)
+    public async Task<IActionResult> Create([Bind("Name,Gender,Age,Weight,PhotoUrl,CategoryId")] PetEntity petEntity)
     {
         ModelState.Remove(nameof(PetEntity.Category));
 
@@ -58,13 +63,16 @@ public class PetController : Controller
             return NotFound();
         }
 
-        PetEntity? petEntity = await _context.Pets.FindAsync(id);
+        var categories = await _context.Categories.ToListAsync();
+        ViewBag.Categories = categories;
+
+        PetEntity ? petEntity = await _context.Pets.FindAsync(id);
         return petEntity == null ? NotFound() : View(petEntity);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(long id, [Bind("Id,Name,Gender,Age,Weight,PhotoUrl")] PetEntity petEntity)
+    public async Task<IActionResult> Edit(long id, [Bind("Id,Name,Gender,Age,Weight,PhotoUrl,CategoryId")] PetEntity petEntity)
     {
         if (id != petEntity.Id)
         {

@@ -26,6 +26,12 @@ public class CategoryController : Controller
             return NotFound();
         }
 
+        var pets = await _context.Pets
+            .Where(_ => _.CategoryId == id)
+            .ToListAsync();
+
+        ViewBag.Pets = pets;
+
         CategoryEntity? categoryEntity = await _context.Categories
             .FirstOrDefaultAsync(m => m.Id == id);
         return categoryEntity == null ? NotFound() : View(categoryEntity);
@@ -64,7 +70,7 @@ public class CategoryController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(long id, [Bind("Name,Description")] CategoryEntity categoryEntity)
+    public async Task<IActionResult> Edit(long id, [Bind("Id,Name,Description")] CategoryEntity categoryEntity)
     {
         if (id != categoryEntity.Id)
         {
